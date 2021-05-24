@@ -105,6 +105,11 @@ func (k topmostRefs) Less(i, j int) bool {
 func TopmostFirst(refs []string) []string {
 	res := topmostRefs(refs)
 	sort.Sort(res)
+	if len(refs) > 1 {
+		if strings.HasSuffix(strings.Split(res[0],"/")[2], "OAIGen") {
+			res.Swap(0,1)
+		}
+	}
 
 	return res
 }
