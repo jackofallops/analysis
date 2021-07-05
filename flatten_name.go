@@ -2,6 +2,7 @@ package analysis
 
 import (
 	"fmt"
+	"os"
 	"path"
 	"sort"
 	"strings"
@@ -112,6 +113,10 @@ func uniqifyName(definitions spec.Definitions, name string) (string, bool) {
 	}
 
 	if len(definitions) == 0 {
+		return name, isOAIGen
+	}
+
+	if strings.EqualFold(os.Getenv("OAIGEN_DEDUPE"), "false") {
 		return name, isOAIGen
 	}
 
