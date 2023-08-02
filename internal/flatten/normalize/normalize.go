@@ -54,8 +54,8 @@ func RebaseRef(baseRef string, ref string) string {
 
 	// this is a local relative path
 	// basePart[0] and parts[0] are local filesystem directories/files
-	basePath = filepath.Dir(baseParts[0])
-	relPath := filepath.Join(basePath, string(filepath.Separator)+parts[0])
+	basePath = path.Dir(baseParts[0])
+	relPath := path.Join(basePath, "/"+parts[0])
 	if len(parts) > 1 {
 		return strings.Join([]string{relPath, parts[1]}, "#")
 	}
