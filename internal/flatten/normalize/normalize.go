@@ -70,7 +70,7 @@ func RebaseRef(baseRef string, ref string) string {
 // * "/ in paths may appear as escape sequences
 func Path(ref spec.Ref, basePath string) string {
 	uri, _ := url.PathUnescape(ref.String())
-	if ref.HasFragmentOnly || filepath.IsAbs(uri) {
+	if ref.HasOnlyFragment() || filepath.IsAbs(uri) {
 		return uri
 	}
 
