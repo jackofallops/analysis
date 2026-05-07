@@ -264,7 +264,15 @@ func partAdder(aschema *AnalyzedSchema) sortref.PartAdder {
 func nameFromRef(ref spec.Ref) string {
 	u := ref.GetURL()
 	if u.Fragment != "" {
-		return swag.ToJSONName(path.Base(u.Fragment))
+		// swag.ToJSONName will return `CommonResource` when u.Fragment is `Common.Resource`
+		// this is a temporary workaround for issue: https://github.com/hashicorp/pandora/issues/5333
+		// the if condition can be removed once the ARM team fixes the issue in typespec generator
+		// we can only add the workaround here because the swag repo is not within our control now
+		base := path.Base(u.Fragment)
+		if base == "Common.Resource" {
+			return base
+		}
+		return swag.ToJSONName(base)
 	}
 
 	if u.Path != "" {
